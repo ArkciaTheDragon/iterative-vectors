@@ -1,0 +1,35 @@
+models:
+  llama-2-7b: /path/to/llama-2-7b-hf
+  llama-2-13b: /path/to/llama-2-13b-hf
+  llama-2-70b: /path/to/llama-2-70b-hf
+  llama-3.1-8b: /path/to/llama-3.1-8b
+  gpt-j-6b: /path/to/gpt-j-6b
+
+no_split_layer:
+  llama-2-7b: LlamaDecoderLayer
+  llama-2-13b: LlamaDecoderLayer
+  llama-2-70b: LlamaDecoderLayer
+  llama-3.1-8b: LlamaDecoderLayer
+  gpt-j-6b: GPTJBlock
+target_layer:
+  llama-2-7b: ["model.layers.{}.self_attn.o_proj", 0, 32]
+  llama-2-13b: ["model.layers.{}.self_attn.o_proj", 0, 40]
+  llama-2-70b: ["model.layers.{}.self_attn.o_proj", 0, 80]
+  llama-3.1-8b: ["model.layers.{}.self_attn.o_proj", 0, 32]
+  gpt-j-6b: ["transformer.h.{}.attn.out_proj", 0, 28]
+tv_target_layer:
+  llama-2-7b: ["model.layers.{}", 0, 32]
+  llama-2-13b: ["model.layers.{}", 0, 40]
+  llama-2-70b: ["model.layers.{}", 0, 80]
+  llama-3.1-8b: ["model.layers.{}", 0, 32]
+  gpt-j-6b: ["transformer.h.{}", 0, 28]
+
+merge:
+  clean_result_fn: results/clean.txt
+  edit_result_fn: results/edit_base.txt
+  test_result_fn: results/test_base.txt
+
+  fv_result_fn: results/fv.txt
+
+  tv_result_fn: results/tv.txt
+  tv_search_metric: macro
